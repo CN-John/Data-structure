@@ -2,21 +2,21 @@
 #include<stdlib.h>
 #include<error.h>
 
-typedef struct ListNode
+typedef struct ListNode  //表节点结构体
 {
-	int dataArea;
-	struct ListNode* pNext;
+	int dataArea;   	 //数据域
+	struct ListNode* pNext;  //指针域
 }ListNode;
 
-void createHeadNode(ListNode** phead)
+void createHeadNode(ListNode** phead)  //传入二级指针，创建并初始化头节点
 {
 	*phead = NULL;
 }
 
-ListNode* createListNode(int value)
+ListNode* createListNode(int value)    //创建表节点
 {
 	ListNode* newnode = (ListNode*)malloc(sizeof(ListNode));
-	if(newnode == NULL){
+	if(newnode == NULL){     //申请内存失败
 		perror("Create ListNode error!\n");
 		return NULL;
 	}
@@ -24,15 +24,15 @@ ListNode* createListNode(int value)
 	newnode->pNext = NULL;
 }
 
-int insertListNode(ListNode** phead, int index, int value)
+int insertListNode(ListNode** phead, int index, int value)  //根据序号插入表节点
 {
-	if(index < 1) return 0;
-	else if(index == 1){
+	if(index < 1) return 0;  //插入位置在头节点及以前的位置，出错
+	else if(index == 1){     //在头节点后插入
 		ListNode* p = createListNode(value);
 		p->pNext = *phead;
 		*phead = p;
 		return 1;
-	}else{
+	}else{                   //在其余位置插入
 		ListNode* tmp = *phead;
 		int count = 1;
 		while(tmp && count < index - 1){
@@ -48,7 +48,7 @@ int insertListNode(ListNode** phead, int index, int value)
 	}
 }
 
-int deleteListNode(ListNode** phead, int index)
+int deleteListNode(ListNode** phead, int index)  //按序号删除表节点
 {
 	if(index < 1) return -1;
 	if(index == 1){
@@ -73,7 +73,7 @@ int deleteListNode(ListNode** phead, int index)
 	}
 }
 
-void printSLinkedList(ListNode** phead)
+void printSLinkedList(ListNode** phead)  //遍历单链表
 {
 	if(*phead == NULL){
 		printf("SLinkedList is empty!\n");
@@ -86,7 +86,7 @@ void printSLinkedList(ListNode** phead)
 	}
 }
 
-void displaySLinkedListLength(ListNode** phead)
+void displaySLinkedListLength(ListNode** phead)  //打印链表大小
 {
 	if(*phead == NULL){
 		printf("SLinkedList is empty!\n");
@@ -101,7 +101,7 @@ void displaySLinkedListLength(ListNode** phead)
 	}	
 }
 
-int getSLinkedListLength(ListNode** phead)
+int getSLinkedListLength(ListNode** phead)   //获取链表大小
 {
 	if(&phead == NULL) return -1;
 	else{
@@ -115,7 +115,7 @@ int getSLinkedListLength(ListNode** phead)
 	}	
 }
 
-int dropSLinkedList(ListNode** phead)
+int dropSLinkedList(ListNode** phead) //删除单链表
 {
 	ListNode* tmp;
 	while(*phead){
@@ -128,7 +128,7 @@ int dropSLinkedList(ListNode** phead)
 
 int main(int argc, char* argv[])
 {
-	ListNode* phead;
+	ListNode* phead;  //定义头指针
 	createHeadNode(&phead);
 	insertListNode(&phead,1,11);
 	insertListNode(&phead,1,22);
