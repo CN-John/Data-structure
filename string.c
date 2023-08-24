@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 
-typedef char* string;
+typedef char* string;  //模拟字符串
 
-string _strcpy(string str1,string str2)
+string _strcpy(string str1,string str2)  //字符串拷贝函数实现
 {
 	while(*str1++=*str2++){
 	;}
@@ -11,7 +11,7 @@ string _strcpy(string str1,string str2)
 }
 
 /*
-string _strcpy(string str1,  string str2)
+string _strcpy(string str1,  string str2) 
 {
 	while(*str2 != '\0'){
 		*str1++ = *str2++;
@@ -21,7 +21,7 @@ string _strcpy(string str1,  string str2)
 }
 */
 
-int _strlen(string str)
+int _strlen(string str)  //获取字符串长度
 {
 	int i=1;
 	while(*str++){
@@ -30,7 +30,7 @@ int _strlen(string str)
 	return i;
 }
 
-string _strcat(const string str1, string str2)
+string _strcat(const string str1, string str2)  //字符串连接函数实现
 {
 	string _str1 = str1;
 
@@ -46,7 +46,7 @@ string _strcat(const string str1, string str2)
 	return str1;	
 }
 
-int _strcmp(string str1, string str2)
+int _strcmp(string str1, string str2)  //字符串比较函数实现
 {
 	while(*str1++ == *str2++){
 		;
@@ -54,7 +54,7 @@ int _strcmp(string str1, string str2)
 	return *(str1-1)-*(str2-1);
 }
 
-int _strstr(string str1,const string str2)
+int _strstr(string str1,const string str2) //判断子字符串
 {
 	while(*str1){
 		string _str2 = str2;
@@ -65,7 +65,7 @@ int _strstr(string str1,const string str2)
 	return -1;
 }
 
-int _strtok(string str1,const string str2)
+int _strtok(string str1,const string str2)  //字符串切割函数实现
 {
 	while(*str1){
 		string _str2 = str2;
