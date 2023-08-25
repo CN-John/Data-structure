@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct stack //堆栈结构体
+typedef struct stack //顺序栈结构体
 {
 	int* data;    //顺序表原型，存放整型数据
 	int top;      //模拟栈顶指针，实现堆栈的核心
