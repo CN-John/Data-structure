@@ -2,18 +2,18 @@
 #include<stdlib.h>
 #include<error.h>
 
-typedef struct StackNode
+typedef struct StackNode  //定义链栈节点
 {
-	int data;
-	struct StackNode* pNext;
+	int data;          //数据域，存储整型数据
+	struct StackNode* pNext;   //指针域
 }StackNode;
 
-void createHeadNode(StackNode** phead)
+void createHeadNode(StackNode** phead)  //初始化表头
 {
 	*phead = NULL;
 }
 
-StackNode* createStackNode(int value)
+StackNode* createStackNode(int value)   //创建链栈节点
 {
 	StackNode* newnode = (StackNode*)malloc(sizeof(StackNode));
 	if(newnode == NULL){
@@ -25,7 +25,7 @@ StackNode* createStackNode(int value)
 	return newnode;
 }
 
-void pushStackNode(StackNode** phead, int value)
+void pushStackNode(StackNode** phead, int value)    //压栈操作，以头插法模拟
 {
 	if(*phead){
 		StackNode* tmp = createStackNode(value);
@@ -36,13 +36,13 @@ void pushStackNode(StackNode** phead, int value)
 	}
 }
 
-int linked_stackIsEmpty(StackNode** phead)
+int linked_stackIsEmpty(StackNode** phead)	//判断栈空
 {
 	if(!*phead) return 1;
 	else return 0;
 }
 
-int topLinkedStack(StackNode** phead)
+int topLinkedStack(StackNode** phead)	  //查看栈顶元素
 {
 	if(*phead == NULL){
 		perror("LinkedStack is empty");
@@ -51,7 +51,7 @@ int topLinkedStack(StackNode** phead)
 	return (*phead)->data;
 }
 
-int popLinkedStack(StackNode** phead)
+int popLinkedStack(StackNode** phead)	  //弹栈操作
 {
 	if(*phead){
 		StackNode* tmp = *phead;
@@ -65,7 +65,7 @@ int popLinkedStack(StackNode** phead)
 	}
 }
 
-int getLinkedStackLength(StackNode** phead)
+int getLinkedStackLength(StackNode** phead)	//获取链栈大小
 {
 	int temp = 0;
 	StackNode* tmp = *phead;
@@ -77,7 +77,7 @@ int getLinkedStackLength(StackNode** phead)
 	return temp;
 }
 
-void printLinkedStack(StackNode** phead)
+void printLinkedStack(StackNode** phead)	//遍历链栈
 {
 	StackNode* tmp = *phead;
 	if(tmp == NULL){
