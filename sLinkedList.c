@@ -14,7 +14,7 @@ void initHeadPoint(ListNode** phead)  //传入头指针的地址，初始化头�
 }
 
 /*
-void createHeadNode(ListNode** phead)  //创建初始化头节点
+void createHeadNode(ListNode** phead)  //创建初始化头节点，若要使用，源代码需要更改，本文属于不带头节点单链表
 {
       ListNode* head = (ListNode*)malloc(sizeof(ListNode));
       if(head == NULL){
@@ -35,6 +35,7 @@ ListNode* createListNode(int value)    //创建表节点
 	}
 	newnode->dataArea = value;
 	newnode->pNext = NULL;
+	return newnode;
 }
 
 int insertListNode(ListNode** phead, int index, int value)  //根据序号插入表节点
@@ -52,7 +53,7 @@ int insertListNode(ListNode** phead, int index, int value)  //根据序号插入
 			tmp = tmp->pNext;
 			count++;
 		}	
-		if(index - count < 3){
+		if(index - count < 2){
 			ListNode* p = createListNode(value);
 			p->pNext = tmp->pNext;
 			tmp->pNext = p;
@@ -71,7 +72,7 @@ int deleteListNode(ListNode** phead, int index)  //按序号删除表节点
 		return 0;
 	}else{
 		ListNode* tmp = *phead, *pnow;
-		int i = 2,len = getSLinkedListLength(&phead);
+		int i = 1,len = getSLinkedListLength(phead);
 		if(index > len) return -1;
 		else{
 			do{
