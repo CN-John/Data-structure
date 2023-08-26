@@ -8,10 +8,23 @@ typedef struct ListNode  //表节点结构体
 	struct ListNode* pNext;  //指针域
 }ListNode;
 
-void createHeadNode(ListNode** phead)  //传入二级指针，创建并初始化头节点
+void initHeadPoint(ListNode** phead)  //传入头指针的地址，初始化头指针
 {
 	*phead = NULL;
 }
+
+/*
+void createHeadNode(ListNode** phead)  //创建初始化头节点
+{
+      ListNode* head = (ListNode*)malloc(sizeof(ListNode));
+      if(head == NULL){
+          perror("create HeadNode error!");
+          exit(1);
+      }
+      head->pNext = NULL;
+      *phead = head;
+}
+*/
 
 ListNode* createListNode(int value)    //创建表节点
 {
@@ -129,7 +142,8 @@ int dropSLinkedList(ListNode** phead) //删除单链表
 int main(int argc, char* argv[])
 {
 	ListNode* phead;  //定义头指针
-	createHeadNode(&phead);
+	initHeadPoint(&phead);
+	//createHeadNode(&phead);
 	insertListNode(&phead,1,11);
 	insertListNode(&phead,1,22);
 	insertListNode(&phead,3,33);
