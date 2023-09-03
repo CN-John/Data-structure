@@ -18,7 +18,7 @@ typedef struct BinaryTree              //二叉树
 	int nodeNum;
 }BinaryTree;
 
-TreeNode* createTreeNode(int value, int tag)          //创建树节点
+TreeNode* createTreeNode(dataType value, int tag)          //创建树节点
 {
 	TreeNode* tmp = (TreeNode*)malloc(sizeof(TreeNode));
 	if(tmp == NULL){
@@ -38,7 +38,7 @@ void initBinaryTree(BinaryTree* bitree)              //初始化一颗树
 	bitree->nodeNum = 0;
 }
 
-void insertRootNode(BinaryTree* bitree, int value, int tag)      //插入根节点
+void insertRootNode(BinaryTree* bitree, dataType value, int tag)      //插入根节点
 {
 	if(bitree->rootNode != NULL){
 		perror("insert rootNode error");
@@ -60,7 +60,7 @@ TreeNode* searchTreeNode(TreeNode* rootnode, int target)          //根据tag寻
 	return NULL;
 }
 
-TreeNode* searchValueTreeNode(TreeNode* rootnode, int value)      //根据数据域中的值寻找树节点
+TreeNode* searchValueTreeNode(TreeNode* rootnode, dataType value)      //根据数据域中的值寻找树节点
 {
 	TreeNode* trgt = rootnode;
 	if(trgt == NULL) return NULL;
@@ -72,7 +72,7 @@ TreeNode* searchValueTreeNode(TreeNode* rootnode, int value)      //根据数据
 	return NULL;
 }
 
-int  insertTreeNode(TreeNode* rootnode, int value, int tag, int parent, int index)        //插入树节点
+int  insertTreeNode(TreeNode* rootnode, dataType value, int tag, int parent, int index)        //插入树节点
 {
 	TreeNode* prnt = searchTreeNode(rootnode, parent);
 	if(prnt == NULL){
