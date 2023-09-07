@@ -2,20 +2,23 @@
 #include<stdlib.h>
 #include<error.h>
 
-typedef struct ListNode       //定义双链表结构体
+//定义双链表结构体
+typedef struct ListNode
 {
 	struct ListNode* pPrev;     //指向前一个节点
 	int data;                   //数据域
 	struct ListNode* pNext;     //指向后一个节点
 }ListNode;
 
-void initHeadTailPoint(ListNode** phead, ListNode** ptail)       //初始化头尾指针
+//初始化头尾指针
+void initHeadTailPoint(ListNode** phead, ListNode** ptail)
 {
 	*phead = NULL;
 	*ptail = NULL;
 }
 
-void createHeadTailNode(ListNode** phead, ListNode** ptail)      //创建头节点(尾节点)，初始头尾指针指向同一个节点
+//创建头节点(尾节点)，初始头尾指针指向同一个节点
+void createHeadTailNode(ListNode** phead, ListNode** ptail)
 {
 	ListNode* tmp = (ListNode*)malloc(sizeof(ListNode));
 	if(tmp == NULL){
@@ -28,7 +31,8 @@ void createHeadTailNode(ListNode** phead, ListNode** ptail)      //创建头节�
 	*ptail = tmp;
 }
 
-ListNode* createListNode(int value)          //创建一个节点
+//创建一个节点
+ListNode* createListNode(int value)
 {
 	ListNode* tmp = (ListNode*)malloc(sizeof(ListNode));
 	if(tmp == NULL){
@@ -41,7 +45,8 @@ ListNode* createListNode(int value)          //创建一个节点
 	return tmp;
 }
 
-int insertListNode(ListNode** phead, ListNode** ptail, int index, int value)  //按位置插入节点
+//按位置插入节点
+int insertListNode(ListNode** phead, ListNode** ptail, int index, int value)
 {
 	int count = 1;
 	ListNode* tmp = (*phead)->pNext;
@@ -83,7 +88,8 @@ int insertListNode(ListNode** phead, ListNode** ptail, int index, int value)  //
 	}
 }
 
-int deleteListNode(ListNode** phead, ListNode** ptail, int index)       //删除节点
+//删除节点
+int deleteListNode(ListNode** phead, ListNode** ptail, int index)       
 {	
 	int count = 1;
 	ListNode* tmp = (*phead)->pNext;
@@ -119,7 +125,8 @@ int deleteListNode(ListNode** phead, ListNode** ptail, int index)       //删除
 	}
 }
 
-int getBLinkedListLength(ListNode** phead)      //获取双链表大小
+//获取双链表大小
+int getBLinkedListLength(ListNode** phead)      
 {
 	int count = 0;
 	if(*phead == NULL){
@@ -134,7 +141,8 @@ int getBLinkedListLength(ListNode** phead)      //获取双链表大小
 	return count;
 }
 
-void sequencePrintBLinkedList(ListNode** phead)      //顺序遍历双链表
+//顺序遍历双链表
+void sequencePrintBLinkedList(ListNode** phead)      
 {
 	ListNode* tmp = (*phead)->pNext;
 	while(tmp){
@@ -143,7 +151,8 @@ void sequencePrintBLinkedList(ListNode** phead)      //顺序遍历双链表
 	}
 }
 
-void reversedPrintBLinkedList(ListNode** ptail)    //逆序遍历双链表
+//逆序遍历双链表
+void reversedPrintBLinkedList(ListNode** ptail)    
 {
 	ListNode* tmp = *ptail;
 	while(tmp->pPrev != NULL){
@@ -152,7 +161,8 @@ void reversedPrintBLinkedList(ListNode** ptail)    //逆序遍历双链表
 	}
 }
 
-int dropBLinkedList(ListNode** phead)      //清除双链表
+//清除双链表
+int dropBLinkedList(ListNode** phead)      
 {
 	ListNode* tmp;
 	while(*phead){
