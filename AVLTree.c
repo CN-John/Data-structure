@@ -70,7 +70,7 @@ void LL_Rotate(TreeNode** rootnode)
     (*rootnode)->height = maxValue(getTreeHeight(&(*rootnode)->leftChild),getTreeHeight(&(*rootnode)->rightChild)) + 1;
 }
 
-//右有单旋
+//右右单旋
 void RR_Rotate(TreeNode** rootnode)
 {
 	TreeNode* tmp = *rootnode;
