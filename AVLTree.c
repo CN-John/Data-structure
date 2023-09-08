@@ -136,7 +136,7 @@ void insertTreeNode(TreeNode** rootnode, dataType data)
 		RL_Rotate(rootnode);	//右左双旋
 	}
 	if(balancer < -1 && data > (*rootnode)->rightChild->data){
-		RR_Rotate(rootnode);	//右有单旋
+		RR_Rotate(rootnode);	//右右单旋
 	}
 }
 
