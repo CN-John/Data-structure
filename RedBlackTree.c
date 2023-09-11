@@ -44,131 +44,139 @@ void insertRootNode(TreeNode** rootnode, dataType data)
 	(*rootnode)->color = BLACK;
 }
 
-int getTreeHeight(TreeNode** rootnode)
+void Left_Rotate(TreeNode** rootnode, TreeNode* node)
 {
-	int cnt1 = 1, cnt2 = 1;
-	if ((*rootnode)->leftChild) {
-		(*rootnode) = (*rootnode)->leftChild;
-		cnt1++;
+	TreeNode* tmp = node->rightChild;
+	node->rightChild = tmp->leftChild;
+
+	if(tmp->leftChild != NULL){
+		tmp->leftChild->parent = node;
 	}
-	if ((*rootnode)->rightChild) {
-		(*rootnode) = (*rootnode)->rightChild;
-		cnt2++;
+
+	tmp->parent = node->parent;
+
+	if(node->parent == NULL){
+		*rootnode = tmp;
+	}
+	else if(node == node->parent->leftChild){
+		node->parent->leftChild = tmp;
+	}
+	else if(node == node->parent->rightChild){
+		node->parent->rightChild = tmp;
+	}
+
+	tmp->leftChild = node;
+	node->parent = tmp;
+}
+
+void Right_Rotate(TreeNode** rootnode, TreeNode* node)
+{
+	TreeNode* tmp = node->leftChild;
+	node->leftChild = tmp->rightChild;
+
+	if(tmp->rightChild != NULL){
+		tmp->rightChild->parent = node;
+	}
+
+	tmp->parent = node->parent;
+	if(node->parent == NULL){
+		*rootnode = tmp;
+	}
+	else if(node == node->parent->leftChild){
+		node->parent->leftChild = tmp;
+	}
+	else if(node == node->parent->rightChild){
+		node->parent->rightChild = tmp;
+	}
+
+	tmp->rightChild = node;
+	node->parent = tmp;
+}
+
+void updateColor(TreeNode** rootnode, TreeNode* newnode)
+{
+	while(newnode->parent != NULL && newnode->parent->color == RED){
+		if (newnode->parent == newnode->parent->parent->leftChild) {
+			if (newnode->parent->parent->rightChild == NULL) {
+				if (newnode == newnode->parent->leftChild) {
+						newnode->parent->color = BLACK;
+						newnode->parent->parent->color = RED;
+						Right_Rotate(rootnode, newnode->parent->parent);
+						return;
+					}
+					else {
+						newnode->color = BLACK;
+						newnode->parent->parent->color = RED;
+						newnode = newnode->parent;
+						Left_Rotate(rootnode, newnode);
+						Right_Rotate(rootnode, newnode->parent->parent);
+						return;
+					}
+				}
+			else {
+				newnode->parent->color = BLACK;
+				newnode->parent->parent->rightChild->color = BLACK;
+				newnode->parent->parent->color = RED;
+				return;
+			}
+		}
+	else {
+		if (newnode->parent->parent->leftChild == NULL) {
+			if (newnode == newnode->parent->rightChild) {
+					newnode->parent->color = BLACK;
+					newnode->parent->parent->color = RED;
+					Left_Rotate(rootnode, newnode->parent->parent);
+					return;
+				}
+				else {
+					newnode->color = BLACK;
+					newnode->parent->parent->color = RED;
+					newnode = newnode->parent;
+					Right_Rotate(rootnode, newnode);
+					Left_Rotate(rootnode, newnode->parent->parent);
+					return;
+				}
+			}
+			else {
+				newnode->parent->color = BLACK;
+				newnode->parent->parent->leftChild->color = BLACK;
+				newnode->parent->parent->color = RED;
+				return;
+			}
+		}
+	}
+	
+	if (newnode->parent == NULL) {
+		newnode->color = BLACK;
 	}
 }
 
-void Left_Rotate(TreeNode** rootnode)
+void insertTreeNode(TreeNode** rootnode, dataType data)
 {
 	TreeNode* tmp = *rootnode;
-	TreeNode* temp = (*rootnode)->rightChild->leftChild;
-	TreeNode* prnt = (*rootnode)->parent;
+	TreeNode* prnt = NULL;
 
-	*rootnode = (*rootnode)->rightChild;
-	(*rootnode)->leftChild = tmp;
-	(*rootnode)->leftChild->rightChild = temp;
-	(*rootnode)->parent = prnt;
-	tmp->parent = *rootnode;
-	if (temp) {
-		temp->parent = (*rootnode)->leftChild;
-	}
-}
-
-void Right_Rotate(TreeNode** rootnode)
-{
-	TreeNode* tmp = (*rootnode);
-	TreeNode* temp = tmp->leftChild->rightChild;
-	TreeNode* prnt = tmp->parent;
-
-	*rootnode = tmp->leftChild;
-	(*rootnode)->rightChild = tmp;
-	(*rootnode)->rightChild->leftChild = temp;
-	(*rootnode)->parent = prnt;
-	tmp->parent = *rootnode;
-	if (temp) {
-		temp->parent = (*rootnode)->rightChild;
-	}
-}
-
-void updateColor(TreeNode** rootnode, TreeNode* child)
-{
-	if (*rootnode == NULL ) return;
-	if (child == (*rootnode)->leftChild) {
-		if (child->color == BLACK) return;
-		else {
-			if ((*rootnode)->rightChild == NULL) {
-				if (child->leftChild) {
-					child->color = BLACK;
-					(*rootnode)->color = RED;
-					Right_Rotate(rootnode);
-					return;
-				}
-				else {
-					child->rightChild->color = BLACK;
-					(*rootnode)->color = RED;
-					Left_Rotate(&(*rootnode)->leftChild);
-					Right_Rotate(rootnode);
-					return;
-				}
-			}
-			else {
-				child->color = BLACK;
-				(*rootnode)->rightChild->color = BLACK;
-				(*rootnode)->color = RED;
-				return;
-			}
+	while(tmp){
+		prnt = tmp;
+		if(data < tmp->data){
+			tmp = tmp->leftChild;
+		}
+		else if(data > tmp->data){
+			tmp = tmp->rightChild;
 		}
 	}
-	else {
-		if (child->color == BLACK) return;
-		else {
-			if ((*rootnode)->leftChild == NULL) {
-				if (child->rightChild) {
-					child->color = BLACK;
-					(*rootnode)->color = RED;
-					Left_Rotate(rootnode);
-					return;
-				}
-				else {
-					child->rightChild->color = BLACK;
-					(*rootnode)->color = RED;
-					Right_Rotate(&(*rootnode)->rightChild);
-					Left_Rotate(rootnode);
-					return;
-				}
-			}
-			else {
-				child->color = BLACK;
-				(*rootnode)->rightChild->color = BLACK;
-				(*rootnode)->color = RED;
-				return;
-			}
-		}
-	}
-}
 
-void insertTreeNode(TreeNode** rootnode, TreeNode* prnt, dataType data)
-{
-	if (*rootnode == NULL) {
-		*rootnode = createTreeNode(data);
-		(*rootnode)->parent = prnt;
-		return;
+	tmp = createTreeNode(data);
+	if(tmp->data < prnt->data){
+		prnt->leftChild = tmp;
+	}else{
+		prnt->rightChild = tmp;
 	}
-	if (data < (*rootnode)->data) {
-		insertTreeNode(&(*rootnode)->leftChild, *rootnode, data);
-		if ((*rootnode)->leftChild && ((*rootnode)->leftChild->leftChild || (*rootnode)->leftChild->rightChild)) {
-			updateColor(rootnode, (*rootnode)->leftChild);
-		}
-		else return;
-	}
-	else if (data > (*rootnode)->data) {
-		insertTreeNode(&(*rootnode)->rightChild, *rootnode, data);
-		if ((*rootnode)->rightChild && ((*rootnode)->rightChild->leftChild || (*rootnode)->rightChild->rightChild)) {
-			updateColor(rootnode, (*rootnode)->rightChild);
-		}
-		else return;
-	}
+	tmp->parent = prnt;
 
-	if ((*rootnode)->parent == NULL) {
+    updateColor(rootnode,tmp);
+
+    if ((*rootnode)->parent == NULL) {
 		(*rootnode)->color = BLACK;
 	}
 }
@@ -204,18 +212,17 @@ int main()
 {
 	TreeNode* tree;
 	initRedBlackTree(&tree);
-	insertRootNode(&tree, 15);
-	insertTreeNode(&tree, NULL, 10);
-	insertTreeNode(&tree, NULL, 20);
-	insertTreeNode(&tree, NULL, 17);
-	// printf("%d\n", tree->rightChild->data);
-	// insertRootNode(&tree, 15);
-	// insertTreeNode(&tree, NULL, 10);
-	// insertTreeNode(&tree, NULL, 20);
-	// insertTreeNode(&tree, NULL, 11);
-	// insertTreeNode(&tree, NULL, 9);
-	// insertTreeNode(&tree, NULL, 8);
-	// insertTreeNode(&tree, NULL, 35);
+	insertRootNode(&tree, 7);
+	insertTreeNode(&tree, 3);
+	insertTreeNode(&tree, 18);
+	insertTreeNode(&tree, 10);
+	insertTreeNode(&tree, 22);
+	insertTreeNode(&tree, 8);
+	insertTreeNode(&tree, 11);
+	insertTreeNode(&tree, 26);
+	insertTreeNode(&tree, 2);
+	insertTreeNode(&tree, 6);
+	insertTreeNode(&tree, 13);
 	proPrintRedBlackTree(&tree);
 	// printf("\n");
 	// inoPrintRedBlackTree(&tree);
