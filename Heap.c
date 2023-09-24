@@ -67,8 +67,9 @@ void insertMinHeap(Heap* heap, dataType data) 	//向堆插入元素
 	}
 }
 
-void deleteMinValue(Heap* heap) 	//删除最小元素，也就是堆顶元素，删除后需要先恢复完全二叉树的结构
-{									//再判断是否还满足堆的性质，否则进行调整			
+dataType deleteMinValue(Heap* heap) 	//删除最小元素并获取，也就是堆顶元素，删除后需要先恢复完全二叉树的结构
+{									//再判断是否还满足堆的性质，否则进行调整	
+	int value = heap->data[0];		
 	int index = heap->size;
 	dataType temp = heap->data[index - 1];
 	while(index > 1){
@@ -79,6 +80,7 @@ void deleteMinValue(Heap* heap) 	//删除最小元素，也就是堆顶元素，
 	}
 	heap->size--;
 	permeateDown(heap, 0);
+	return value;
 }
 
 void changValue(Heap* heap, dataType data, dataType newdata) 	//将堆中某值进行调整
@@ -129,6 +131,14 @@ void printHeap(Heap* heap)
 	}
 }
 
+//堆排序
+void heapSort(Heap* heap)
+{
+	for(int i = 0; i < heap->size; i++){
+		printf("%d ",deleteMinValue(heap));
+	}
+}
+
 int main()
 {
 	Heap h;
@@ -140,8 +150,8 @@ int main()
 	insertMinHeap(&h, 9);
 	insertMinHeap(&h, 22);
 	insertMinHeap(&h, 6);
-	deleteMinValue(&h);
-	deleteMinValue(&h);
+	//heapSort(&h);
+	//deleteMinValue(&h);
 	//changValue(&h, 22, 1);
 	//clearHeap(&h);
 	//dropHeap(&h);
